@@ -91,6 +91,9 @@ module GoogleStorage
         options[:data] = @data
       end
       resp = put(bucket_name, "/#{filename}", options)
+
+      puts("Debug message: ", bucket_name, filename, options.select{|k,v| k != :data}) if resp.nil?
+
       public_file = (options[:x_goog_acl] && options[:x_goog_acl].match(/public/))
       return Crack::XML.parse(resp.body) unless resp.code == "200"
       resp_obj = {}
